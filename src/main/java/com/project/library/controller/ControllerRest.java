@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Controller {
+public class ControllerRest {
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String index() {
-        return "Hello, Library!";
+        return "Hello Library manager!!!!!!!!!!!!!";
     }
 }

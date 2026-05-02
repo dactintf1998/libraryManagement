@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8" />
+            <title>My First Page</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link rel="stylesheet" href="/css/style.css">
+            <script th:src="@{/js/script.js}"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+                integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+                crossorigin="anonymous">
+
+        </head>
+
+        <body>
+            <h1>Hello from jsp</h1>
+            <p text="${message}"></p>
+            <table style="padding: 15px;" class="table table-bordered table-hover ">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Is Admin</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="user" items="${users}" varStatus="theLoop">
+                        <tr>
+                            <td>${theLoop.count} </td>
+                            <td>${user.username} </td>
+                            <td>${user.email} </td>
+                            <td>${user.admin} </td>
+                            <td>
+                                <a href="/user/edit/${user.id}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a href="/user/delete/${user.id}" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <a href="/user/create" class="btn btn-primary">Create User</a>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+                integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+                crossorigin="anonymous"></script>
+        </body>
+
+        </html>
