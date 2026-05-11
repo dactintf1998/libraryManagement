@@ -8,7 +8,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
-import com.project.library.model.User;
+import com.project.library.domain.User;
 import com.project.library.repository.UserRepository;
 
 @Service
@@ -24,7 +24,7 @@ public class UserService {
         return users;
     }
 
-    public User getUserById(int id) {
+    public User getUserById(long id) {
         return this.userRepository.findById(id);
     }
 
@@ -36,24 +36,17 @@ public class UserService {
         return this.userRepository.findUserByEmail(email);
     }
 
-    public User addUser(User user) {
+    public void addUser(User user) {
         this.userRepository.save(user);
-        return user;
     }
 
-    public void activateUser(User user) {
-        user.setActivated(true);
-    }
-
-    public User updateUser(User user, User newUser) {
+    public void updateUser(User user, User newUser) {
         user.setEmail(newUser.getEmail());
         user.setPassword(newUser.getPassword());
         this.userRepository.save(user);
-        return user;
     }
 
-    public void deleteUser(int id) {
-        System.out.println("delete " + id);
+    public void deleteUser(long id) {
         this.userRepository.deleteById(id);
     }
 }

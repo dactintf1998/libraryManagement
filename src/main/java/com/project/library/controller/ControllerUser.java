@@ -9,13 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.project.library.model.User;
-import com.project.library.repository.UserRepository;
+import com.project.library.domain.User;
 import com.project.library.service.UserService;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ControllerUser {
@@ -28,20 +23,8 @@ public class ControllerUser {
 
     @GetMapping("/")
     public String homeGet(Model model) {
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("users", users);
-        // mv.addObject("users", users);
+        model.addAttribute("users", this.userService.getAllUsers());
         return "hello";
-    }
-
-    @PostMapping("/")
-    public String homePost(@ModelAttribute User user, Model model) {
-        user.setAdmin(false);
-        user.setActivated(false);
-        userService.addUser(user);
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "user/greeting";
     }
 
     @GetMapping("/user/create")
@@ -51,38 +34,30 @@ public class ControllerUser {
         return "user/create";
     }
 
+    @PostMapping("/user/create")
+    public String greetingCreate(@ModelAttribute User user, Model model) {
+        userService.addUser(user);
+        return "redirect:/";
+    }
+
     @GetMapping("/user/edit/{id}")
     public String updateUser(@PathVariable Long id, Model model) {
-
-        User updatedUser = this.userService.getUserById(id.intValue());
         model.addAttribute("id", id);
-        model.addAttribute("user", updatedUser);
+        model.addAttribute("user", this.userService.getUserById(id));
         return "user/edit";
     }
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
-        User updatedUser = this.userService.getUserById(id.intValue());
-        this.userService.deleteUser(updatedUser.getId());
-        return "user/greeting";
+        this.userService.deleteUser(this.userService.getUserById(id).getUserId());
+        return "redirect:/";
     }
 
-    @PostMapping("/user/create/greeting")
-    public String greetingCreate(@ModelAttribute User user, Model model) {
-        user.setAdmin(false);
-        user.setActivated(false);
-        userService.addUser(user);
-        return "user/greeting";
-    }
-
-    @PostMapping("/user/edit/greeting/{id}")
+    @PostMapping("/user/edit/{id}")
     public String greetingUpdate(@PathVariable Long id, @ModelAttribute User user, Model model) {
-        User updatedUser = this.userService.getUserById(id.intValue());
-        System.out.println(updatedUser.toString());
-        userService.updateUser(updatedUser, user);
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "user/greeting";
+        userService.updateUser(this.userService.getUserById(id.intValue()), user);
+        model.addAttribute("users", this.userService.getAllUsers());
+        return "redirect:/";
     }
 }

@@ -18,7 +18,7 @@
                 <h1>Create new user</h1>
                 <p th:text="${message}"></p>
                 <div class="container mt-5">
-                    <c:url var="add_user_url" value="/user/create/greeting" />
+                    <c:url var="add_user_url" value="/user/create" />
                     <form:form action="${add_user_url}" method="post" modelAttribute="user">
                         <div class="mb-3">
                             <label path="username" class="form-label">Username</label>

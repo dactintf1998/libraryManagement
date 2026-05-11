@@ -25,7 +25,6 @@
                         <th scope="col">#</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Is Admin</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -35,7 +34,6 @@
                             <td>${theLoop.count} </td>
                             <td>${user.username} </td>
                             <td>${user.email} </td>
-                            <td>${user.admin} </td>
                             <td>
                                 <a href="/user/edit/${user.id}" class="btn btn-sm btn-outline-primary">Edit</a>
                                 <a href="/user/delete/${user.id}" class="btn btn-sm btn-outline-danger">Delete</a>

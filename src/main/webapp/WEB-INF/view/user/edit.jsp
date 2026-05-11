@@ -17,7 +17,7 @@
             <body>
                 <h3 value="id">Hello user ${id}</h3>
                 <div class="container mt-5">
-                    <c:url var="add_user_url" value="/user/edit/greeting/${id}" />
+                    <c:url var="add_user_url" value="/user/edit/${id}" />
                     <form:form action="${add_user_url}" method="post" modelAttribute="user">
                         <div class="mb-3">
                             <form:hidden path="id" value="${id}" />
@@ -25,7 +25,6 @@
                         <div class="mb-3">
                             <label path="email" class="form-label">Email address</label>
                             <form:input type="text" class="form-control" path="email" />
-                            ${user.email}
                         </div>
                         <div class="mb-3">
                             <label path="password" class="form-label">Password</label>

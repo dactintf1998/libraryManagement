@@ -1,18 +1,24 @@
-package com.project.library.model;
+package com.project.library.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
+
 import jakarta.persistence.Column;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -23,30 +29,30 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(columnDefinition = "boolean default false", nullable = false)
-    private Boolean isAdmin;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @Column(columnDefinition = "boolean default false", nullable = false)
-    private Boolean activated;
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public User() {
     }
 
-    public User(int id, String username, String password, String email, boolean isAdmin, boolean activated) {
-        this.id = id;
+    public User(long id, String username, String password, String email, Role role) {
+        this.userId = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.isAdmin = isAdmin;
-        this.activated = activated;
+        this.role = role;
     }
 
-    public int getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(long id) {
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -73,29 +79,19 @@ public class User {
         this.email = email;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "id='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", isAdmin=" + isAdmin +
-                ", activated=" + activated +
                 '}';
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRoleId(Role role) {
+        this.role = role;
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.project.library.model.User;
+import com.project.library.domain.User;
 
 import jakarta.transaction.Transactional;
 
@@ -15,14 +15,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAll();
 
-    User findById(int id);
+    User findById(long id);
 
     User findUserByUsername(String username);
 
     User findUserByEmail(String email);
 
     @Transactional
-    void deleteById(int id);
+    void deleteById(long id);
 
     void deleteAll();
     // Optional<User> getUserById(int id);

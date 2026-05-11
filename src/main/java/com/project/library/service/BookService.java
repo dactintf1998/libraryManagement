@@ -2,35 +2,54 @@ package com.project.library.service;
 
 import java.util.List;
 
-import com.project.library.model.Book;
+import com.project.library.domain.Book;
+import com.project.library.repository.BookRepository;
 
 public class BookService {
-    public List<Book> getAllBooks() {
-        return null;
+
+    private final BookRepository bookRepository;
+
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
-    public Book getBookById(int id) {
-        return null;
+    public List<Book> getAllBooks() {
+        return this.bookRepository.findAll();
+    }
+
+    public Book getBookById(long id) {
+        return this.bookRepository.findById(id);
     }
 
     public List<Book> searchBooksByName(String name) {
-        return null;
+        return this.bookRepository.findBookByName(name);
     }
 
     public List<Book> getBookByAuthor(String author) {
-        return null;
+        return this.bookRepository.findBookByAuthor(author);
     }
 
-    public Book createBook(Book book) {
-        return null;
+    public void createBook(Book book) {
+        this.bookRepository.save(book);
     }
 
-    public Book updateBook(int id, Book book) {
-        return null;
+    public void updateBook(Book book, Book newBook) {
+        book.setAuthor(newBook.getAuthor());
+        book.setName(newBook.getName());
+        book.setYear(newBook.getYear());
+        book.setImage(newBook.getImage());
+        book.setDetailDescription(newBook.getDetailDescription());
+        book.setShortDescription(newBook.getShortDescription());
+        book.setStockQuantity(newBook.getStockQuantity());
+        book.setSoldQuantity(newBook.getSoldQuantity());
+        book.setTag(newBook.getTag());
+        book.setPrice(newBook.getPrice());
+        this.bookRepository.save(book);
+
     }
 
-    public void deleteBook(int id) {
-        // No actual deletion logic for this example
+    public void deleteBook(long id) {
+        this.bookRepository.deleteById(id);
     }
 
 }
